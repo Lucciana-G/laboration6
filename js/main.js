@@ -13,10 +13,11 @@ const errorP = document.querySelector("#error");
 const apiMessage = document.querySelector("#message");
 const recipeSection = document.querySelector("#recipe");
 
-//funktion som validerar input 
 
-searchButton.addEventListener("click", ()=> {
-    const searchText = inputEl.ariaValueMax.trim();
+//funktion som validerar input 
+searchButton.addEventListener("click", (event)=> {
+    event.preventDefault();
+    const searchText = inputEl.value.trim();
 
     //Rensa tidigare felmeddelande
     errorP.textContent ="";
