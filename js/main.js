@@ -75,6 +75,7 @@ async function showRecipe(event){
     
     //Plocka bara ut det första receptet
     const recipe = data.recipes[0];
+    console.log(data);
 
     //Skapar en li för varje ingrediens och varje instuktion
     const ingredients =recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
