@@ -59,18 +59,22 @@ async function searchAPI(searchText){
 async function showRecipe(event){
     event.preventDefault(); //stoppa sidomladning
 
-    const data = await searchAPI(inputEl.value);
+    const searchText = validateInput();
+
+    //avbryt om valideringen misslyckades
+    if(!searchText) return;
     console.log(data);
 
+    const data = await searchAPI(searchText);
+
     //Rensa tidigare felmeddelande
-    apiMessage.innerHTML ="";
+    apiMessage.textContent ="";
+    recipeSection.innerHTML ="";
 
     if(!data || data.recipes.length === 0 ){
         apiMessage.textContent = `Receptet hittades inte, prova en annan sökfras!`;
         return;
     }
-
-    data.recipes.forEach(recipes => { 
     
     //Skapar en li för varje ingrediens och varje instuktion
     const ingredients =recipes.ingredients.map((item) => `<li>${item}</li>`).join("");
@@ -78,7 +82,6 @@ async function showRecipe(event){
         
     //Ersätter tidigare recept med den nya
     recipeSection.innerHTML =`
-
     <article>
     <h3>${recipes.name}</h3>
     <img src="${recipes.image}" alt="${recipes.name}">
@@ -95,14 +98,12 @@ async function showRecipe(event){
     <h4>Instructions:</h4>
     <ol>${instructions}</ol>
     </article>`;
-        
-    });
+
 
 }
 
-
 //Eventlysnare
-form.addEventListener("submit", showRecipe, validateInput);
+form.addEventListener("submit", showRecipe);
 
 
 
