@@ -28,7 +28,31 @@ function validateInput(event){
         errorP.textContent= "Du måste skriva in en sökfras!";
         return;
     }
+
+    //Anropar funktionen om koden ovanför har godkänts
+    searchAPI(searchText);
 }
+
+//Funtion som anropar API:t
+async function searchAPI(searchText){
+    try{
+        //Skickar förfrågan till API:et.
+        const response = await fetch(`https://dummyjson.com/recipes/search?q=${searchText}`);
+
+        if(!response.ok){
+            throw new Error("Något gick fel !");
+        }
+        //Gör iom svaret från API:t till ett javaScript
+        const data = await response.json();
+        console.log(data);
+
+        //Visa resultat
+    }catch(error){
+        //om något går fel
+        /*errorP.textContent ="Något gick fel, testa igen senare!";*/
+    }
+}
+
 
 //Eventlysnare till validering
 searchButton.addEventListener("click", validateInput );
