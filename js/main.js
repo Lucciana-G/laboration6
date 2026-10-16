@@ -6,7 +6,7 @@
 
 
 //Hämta element från DOM
-const form = document.querySelector("#searchForm");
+const form = document.querySelector("#searchform");
 const inputEl = document.querySelector("#search");
 const searchButton = document.querySelector("#searchbutton");
 const errorP = document.querySelector("#error");
