@@ -18,8 +18,10 @@ const recipeSection = document.querySelector("#recipe");
 searchButton.addEventListener("click", ()=> {
     const searchText = inputEl.ariaValueMax.trim();
 
+    //Rensa tidigare felmeddelande
     errorP.textContent ="";
 
+    //Validera om fältet är fylld
     if(searchText === ""){
         errorP.textContent= "Du måste skriva in en sökfras!";
         return;
