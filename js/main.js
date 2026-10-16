@@ -43,7 +43,6 @@ async function searchAPI(searchText){
         }
         //Gör iom svaret från API:t till ett javaScript
         const data = await response.json();
-        console.log(data);
         return data;
 
     }catch(error){
@@ -72,13 +71,16 @@ async function showRecipe(event){
     recipeSection.innerHTML ="";
 
     if(!data || data.recipes.length === 0 ){
-        apiMessage.textContent = `Receptet hittades inte, prova en annan sökfras!`;
+        apiMessage.textContent = "Receptet hittades inte, prova en annan sökfras!";
         return;
     }
     
+    //Plocka bara ut det första receptet
+    const recipe = data.recipes[0];
+
     //Skapar en li för varje ingrediens och varje instuktion
-    const ingredients =recipes.ingredients.map((item) => `<li>${item}</li>`).join("");
-    const instructions =recipes.instructions.map((step) => `<li>${step}</li>`).join("");
+    const ingredients =recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
+    const instructions =recipe.instructions.map((step) => `<li>${step}</li>`).join("");
         
     //Ersätter tidigare recept med den nya
     recipeSection.innerHTML =`
