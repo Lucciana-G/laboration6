@@ -49,10 +49,14 @@ async function searchAPI(searchText){
         //Visa resultat
     }catch(error){
         //om något går fel
-        errorP.textContent ="Något gick fel, testa igen senare!";
+        apiMessage.textContent ="Inget recept med detta namn, testa igen!";
     }
 }
 
+//Funktion som skriver ut receptet i DOM
+async function showRecipe(recipe){
+
+}
 
 //Eventlysnare till validering
 searchButton.addEventListener("click", validateInput );
