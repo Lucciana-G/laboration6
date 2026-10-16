@@ -47,7 +47,7 @@ async function searchAPI(searchText){
 
     }catch(error){
         //om något går fel
-        console.error ="Något gick fel, testa igen senare!";
+        console.error =("Något gick fel, testa igen senare!", error);
         return null;
     }
 
@@ -59,10 +59,8 @@ async function showRecipe(event){
     event.preventDefault(); //stoppa sidomladning
 
     const searchText = validateInput();
-
     //avbryt om valideringen misslyckades
     if(!searchText) return;
-    console.log(data);
 
     const data = await searchAPI(searchText);
 
@@ -85,13 +83,13 @@ async function showRecipe(event){
     //Ersätter tidigare recept med den nya
     recipeSection.innerHTML =`
     <article>
-    <h3>${recipes.name}</h3>
-    <img src="${recipes.image}" alt="${recipes.name}">
+    <h3>${recipe.name}</h3>
+    <img src="${recipe.image}" alt="${recipe.name}">
     <div class="recipe-info">
-    <p><strong>Servings: </strong> ${recipes.servings}.</p>
-    <p><strong>Prep time: </strong> ${recipes.prepTimeMinutes} minutes.</p>
-    <p><strong>Cooking time: </strong> ${recipes.cookTimeMinutes} minutes.</p>
-    <p><strong>Difficulty: </strong> ${recipes.difficulty}.</p>
+    <p><strong>Servings: </strong> ${recipe.servings}.</p>
+    <p><strong>Prep time: </strong> ${recipe.prepTimeMinutes} minutes.</p>
+    <p><strong>Cooking time: </strong> ${recipe.cookTimeMinutes} minutes.</p>
+    <p><strong>Difficulty: </strong> ${recipe.difficulty}.</p>
     </div>
 
     <h4>Ingredients:</h4>
