@@ -62,6 +62,9 @@ async function showRecipe(event){
     const data = await searchAPI(inputEl.value);
     console.log(data);
 
+    //Rensa tidigare felmeddelande
+    apiMessage.innerHTML ="";
+
     if(!data || data.resipes.lenght === 0 ){
         apiMessage.innerHTML = `Receptet hittades inte, prova en annan sökfras!`;
         return;
@@ -74,7 +77,8 @@ async function showRecipe(event){
     const instructions =recipes.instructions.map((step) => `<li>${step}</li>`).join("");
         
     //Ersätter tidigare recept med den nya
-    recipeSection.innerHTML=`
+    recipeSection.innerHTML =`
+
     <article>
     <h3>${recipes.name}</h3>
     <img src="${recipes.image}" alt="${recipes.name}">
@@ -97,9 +101,8 @@ async function showRecipe(event){
 }
 
 
-
 //Eventlysnare till validering
-searchButton.addEventListener("click", validateInput, );
+form.addEventListener("submit", showRecipe );
 
 
 
