@@ -28,9 +28,8 @@ function validateInput(event){
         errorP.textContent= "Du måste skriva in en sökfras!";
         return;
     }
-
-    //Anropar funktionen om koden ovanför har godkänts
-    searchAPI(searchText);
+   //Anropar om koden övanför är giltigt
+   searchAPI(searchText);
 }
 
 //Funtion som anropar API:t
@@ -38,28 +37,37 @@ async function searchAPI(searchText){
     try{
         //Skickar förfrågan till API:et.
         const response = await fetch(`https://dummyjson.com/recipes/search?q=${searchText}`);
+        //Gör om svaret från API:t till ett javaScript
+        const data = await response.json(); 
+        //Rensa tidigare meddelande och information
+        apiMessage.innerHTML="";
+
         //kontrollera att svaret är giltigt
-        if(!response.ok){
-            throw new Error("Något gick fel !");
+        if(!data.recipe || data.recepe.lenght === 0){
+           apiMessage.textContent = "Inget recept kunde hittas. Prova en annan sökfras!";
+           return;
         }
-        //Gör iom svaret från API:t till ett javaScript
-        const data = await response.json();
-        return data.resipes[0];
-         
-        //Visa resultat
+        console.log(data);
+        const recipe = data.resipes[0]; //Hämta första recipe
+
+        showRecipe(recipe);
+
     }catch(error){
         //om något går fel
         console.error("Något har hänt fel!");
-        /*apiMessage.textContent ="Inget recept med detta namn, testa igen!";*/
+        errorP.textContent = "Något gick fel!";
     }
+
+
 }
 
 //Funktion som skriver ut receptet i DOM
 async function showRecipe(recipe){
+    
     //Skapar en li för varje ingrediens och varje instuktion
     const ingredients =recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
     const instructions =recipe.instructions.map((step) => `<li>${step}</li>`).join("");
-
+    
     //Ersätter tidigare recept med den nya
     recipeSection.innerHTML=`
     <article>
@@ -79,6 +87,10 @@ async function showRecipe(recipe){
     <ol>${instructions}</ol>
     </article>`;
 }
+
+//Körs när formuläret skickas
+
+
 
 //Eventlysnare till validering
 searchButton.addEventListener("click", validateInput );
