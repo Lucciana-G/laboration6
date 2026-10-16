@@ -44,11 +44,12 @@ async function searchAPI(searchText){
         //Gör iom svaret från API:t till ett javaScript
         const data = await response.json();
         console.log(data);
-        return data.recipes[0];
+        return data;
 
     }catch(error){
         //om något går fel
         console.error ="Något gick fel, testa igen senare!";
+        return null;
     }
 
 
