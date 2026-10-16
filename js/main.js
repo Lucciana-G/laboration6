@@ -28,34 +28,25 @@ function validateInput(event){
         errorP.textContent= "Du måste skriva in en sökfras!";
         return;
     }
-   //Anropar om koden övanför är giltigt
-   searchAPI(searchText);
 }
 
 //Funtion som anropar API:t
 async function searchAPI(searchText){
-    try{
+     try{
         //Skickar förfrågan till API:et.
         const response = await fetch(`https://dummyjson.com/recipes/search?q=${searchText}`);
-        //Gör om svaret från API:t till ett javaScript
-        const data = await response.json(); 
-        //Rensa tidigare meddelande och information
-        apiMessage.innerHTML="";
 
-        //kontrollera att svaret är giltigt
-        if(!data.recipe || data.recepe.lenght === 0){
-           apiMessage.textContent = "Inget recept kunde hittas. Prova en annan sökfras!";
-           return;
+        if(!response.ok){
+            throw new Error("Något gick fel !");
         }
+        //Gör iom svaret från API:t till ett javaScript
+        const data = await response.json();
         console.log(data);
-        const recipe = data.resipes[0]; //Hämta första recipe
 
-        showRecipe(recipe);
-
+        //Visa resultat
     }catch(error){
         //om något går fel
-        console.error("Något har hänt fel!");
-        errorP.textContent = "Något gick fel!";
+        /*errorP.textContent ="Något gick fel, testa igen senare!";*/
     }
 
 
@@ -88,12 +79,11 @@ async function showRecipe(recipe){
     </article>`;
 }
 
-//Körs när formuläret skickas
-
 
 
 //Eventlysnare till validering
-searchButton.addEventListener("click", validateInput );
+searchButton.addEventListener("click", validateInput, );
+
 
 
 
