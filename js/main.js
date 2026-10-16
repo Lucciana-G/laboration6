@@ -101,7 +101,7 @@ async function showRecipe(event){
 }
 
 
-//Eventlysnare till validering
+//Eventlysnare
 form.addEventListener("submit", showRecipe );
 
 
