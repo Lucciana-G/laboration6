@@ -15,8 +15,7 @@ const recipeSection = document.querySelector("#recipe");
 
 
 //funktion som validerar input 
-function validateInput(event){
-    event.preventDefault();
+function validateInput(){
 
     const searchText = inputEl.value.trim();
 
@@ -26,12 +25,12 @@ function validateInput(event){
     //Validera om fältet är fylld
     if(searchText === ""){
         errorP.textContent= "Du måste skriva in en sökfras!";
-        return;//avbryter, inget API:anrop görs
+        return null;//avbryter, inget API:anrop görs
     }
 
-    //Här är sökning giltigt
-    searchAPI(searchText);
+    return searchText;
 }
+
 
 //Funtion som anropar API:t
 async function searchAPI(searchText){
@@ -45,7 +44,7 @@ async function searchAPI(searchText){
         //Gör iom svaret från API:t till ett javaScript
         const data = await response.json();
         console.log(data);
-        return data.resipes[0];
+        return data.recipes[0];
 
     }catch(error){
         //om något går fel
@@ -65,8 +64,8 @@ async function showRecipe(event){
     //Rensa tidigare felmeddelande
     apiMessage.innerHTML ="";
 
-    if(!data || data.resipes.lenght === 0 ){
-        apiMessage.innerHTML = `Receptet hittades inte, prova en annan sökfras!`;
+    if(!data || data.recipes.length === 0 ){
+        apiMessage.textContent = `Receptet hittades inte, prova en annan sökfras!`;
         return;
     }
 
@@ -102,7 +101,7 @@ async function showRecipe(event){
 
 
 //Eventlysnare
-form.addEventListener("submit", showRecipe );
+form.addEventListener("submit", showRecipe, validateInput);
 
 
 
