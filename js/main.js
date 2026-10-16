@@ -26,8 +26,11 @@ function validateInput(event){
     //Validera om fältet är fylld
     if(searchText === ""){
         errorP.textContent= "Du måste skriva in en sökfras!";
-        return;
+        return;//avbryter, inget API:anrop görs
     }
+
+    //Här är sökning giltigt
+    searchAPI(searchText);
 }
 
 //Funtion som anropar API:t
@@ -42,33 +45,44 @@ async function searchAPI(searchText){
         //Gör iom svaret från API:t till ett javaScript
         const data = await response.json();
         console.log(data);
+        return data.resipes[0];
 
-        //Visa resultat
     }catch(error){
         //om något går fel
-        /*errorP.textContent ="Något gick fel, testa igen senare!";*/
+        console.error ="Något gick fel, testa igen senare!";
     }
 
 
 }
 
 //Funktion som skriver ut receptet i DOM
-async function showRecipe(recipe){
+async function showRecipe(event){
+    event.preventDefault(); //stoppa sidomladning
+
+    const data = await searchAPI(inputEl.value);
+    console.log(data);
+
+    if(!data || data.resipes.lenght === 0 ){
+        apiMessage.innerHTML = `Receptet hittades inte, prova en annan sökfras!`;
+        return;
+    }
+
+    data.recipes.forEach(recipes => { 
     
     //Skapar en li för varje ingrediens och varje instuktion
-    const ingredients =recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
-    const instructions =recipe.instructions.map((step) => `<li>${step}</li>`).join("");
-    
+    const ingredients =recipes.ingredients.map((item) => `<li>${item}</li>`).join("");
+    const instructions =recipes.instructions.map((step) => `<li>${step}</li>`).join("");
+        
     //Ersätter tidigare recept med den nya
     recipeSection.innerHTML=`
     <article>
-    <h3>${recipe.name}</h3>
-    <img src="${recipe.image}" alt="${recipe.name}">
+    <h3>${recipes.name}</h3>
+    <img src="${recipes.image}" alt="${recipes.name}">
     <div class="recipe-info">
-    <p><strong>Servings: </strong> ${recipe.servings}.</p>
-    <p><strong>Prep time: </strong> ${recipe.prepTimeMinutes} minutes.</p>
-    <p><strong>Cooking time: </strong> ${recipe.cookTimeMinutes} minutes.</p>
-    <p><strong>Difficulty: </strong> ${recipe.difficulty}.</p>
+    <p><strong>Servings: </strong> ${recipes.servings}.</p>
+    <p><strong>Prep time: </strong> ${recipes.prepTimeMinutes} minutes.</p>
+    <p><strong>Cooking time: </strong> ${recipes.cookTimeMinutes} minutes.</p>
+    <p><strong>Difficulty: </strong> ${recipes.difficulty}.</p>
     </div>
 
     <h4>Ingredients:</h4>
@@ -77,6 +91,9 @@ async function showRecipe(recipe){
     <h4>Instructions:</h4>
     <ol>${instructions}</ol>
     </article>`;
+        
+    });
+
 }
 
 
