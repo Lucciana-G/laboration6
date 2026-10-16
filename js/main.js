@@ -15,8 +15,9 @@ const recipeSection = document.querySelector("#recipe");
 
 
 //funktion som validerar input 
-searchButton.addEventListener("click", (event)=> {
+function validateInput(event){
     event.preventDefault();
+
     const searchText = inputEl.value.trim();
 
     //Rensa tidigare felmeddelande
@@ -27,5 +28,10 @@ searchButton.addEventListener("click", (event)=> {
         errorP.textContent= "Du måste skriva in en sökfras!";
         return;
     }
-})
+}
+
+//Eventlysnare till validering
+searchButton.addEventListener("click", validateInput );
+
+
 
