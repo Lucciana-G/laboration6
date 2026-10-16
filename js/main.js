@@ -15,5 +15,14 @@ const recipeSection = document.querySelector("#recipe");
 
 //funktion som validerar input 
 
+searchButton.addEventListener("click", ()=> {
+    const searchText = inputEl.ariaValueMax.trim();
 
+    errorP.textContent ="";
+
+    if(searchText === ""){
+        errorP.textContent= "Du måste skriva in en sökfras!";
+        return;
+    }
+})
 
