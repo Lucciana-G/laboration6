@@ -37,7 +37,7 @@ async function searchAPI(searchText){
      try{
         //Skickar förfrågan till API:et.
         const response = await fetch(`https://dummyjson.com/recipes/search?q=${searchText}`);
-
+       //kontrollerar att svaret är giltigt innan data används
         if(!response.ok){
             throw new Error("Något gick fel !");
         }
@@ -47,7 +47,12 @@ async function searchAPI(searchText){
 
     }catch(error){
         //om något går fel
-        console.error =("Något gick fel, testa igen senare!", error);
+        //ta bort tidigare recept och visa felmeddelande
+        recipeSection.innerHTML ="";
+        apiMessage.textContent ="Något gick fel, testa igen senare!";
+
+        //Teknisk info i console
+        console.error("Fel vid API-anrop!", error);
         return null;
     }
 
