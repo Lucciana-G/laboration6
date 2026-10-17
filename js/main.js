@@ -68,12 +68,14 @@ async function showRecipe(event){
     if(!searchText) return;
 
     const data = await searchAPI(searchText);
+    //Om anropet misslyckades har searchAPI redan visat felmeddelandet
+    if(!data) return;
 
     //Rensa tidigare felmeddelande
     apiMessage.textContent ="";
     recipeSection.innerHTML ="";
 
-    if(!data || data.recipes.length === 0 ){
+    if(data.recipes.length === 0 ){
         apiMessage.textContent = "Receptet hittades inte, prova en annan sökfras!";
         return;
     }
