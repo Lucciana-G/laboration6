@@ -8,7 +8,6 @@
 //Hämta element från DOM
 const form = document.querySelector("#searchform");
 const inputEl = document.querySelector("#search");
-const searchButton = document.querySelector("#searchbutton");
 const errorP = document.querySelector("#error");
 const apiMessage = document.querySelector("#message");
 const recipeSection = document.querySelector("#recipe");
